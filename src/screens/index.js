@@ -5,6 +5,7 @@ import Cart from "./cart"
 import Profile from "./profile"
 import Search from "./search"
 import Welcome from "./welcome"
+import Detail from "./detail"
 export {
     Login,
     Home,
@@ -12,5 +13,6 @@ export {
     Cart,
     Profile,
     Search,
-    Welcome
+    Welcome,
+    Detail,
 }

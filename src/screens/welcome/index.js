@@ -29,7 +29,7 @@ const Welcome = (props) => {
                 marginTop: 50
             }}>
                 <Text style={{
-                    color: 'yellow',
+                    color: colors.yellow,
                     fontSize: fontSizes.h1
                 }}>
                     Me
@@ -71,7 +71,7 @@ const Welcome = (props) => {
         }}>
             <MainButton
                 onPress={() => {
-                    navigate('TabUI')
+                    navigate('Login')
                 }}
                 styles={{
 
@@ -91,11 +91,15 @@ const Welcome = (props) => {
                     marginLeft: 1,
                     fontSize: fontSizes.h4
                 }}>?</Text>
-                <Text style={{
-                    marginLeft: 5,
-                    color: colors.main,
-                    fontSize: fontSizes.h4
-                }}>
+                <Text
+                    onPress={() => {
+                        navigate('Register')
+                    }}
+                    style={{
+                        marginLeft: 5,
+                        color: colors.main,
+                        fontSize: fontSizes.h4
+                    }}>
                     Register
                 </Text>
             </View>

@@ -4,4 +4,7 @@ export default {
     cart: require('../../assets/icons/cart.png'),
     profile: require('../../assets/icons/profile.png'),
     search: require('../../assets/icons/search.png'),
+    star: require('../../assets/icons/star.png'),
+    person: require('../../assets/icons/person.png'),
+    melon: require('../../assets/icons/melon.png'),
 }
