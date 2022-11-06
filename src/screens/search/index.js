@@ -9,6 +9,7 @@ import {
     View
 } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useIsFocused } from "@react-navigation/native";
 import axios from "axios";
 
 import { colors, fontSizes, icons } from "../../constants";
@@ -17,10 +18,11 @@ import { products } from '../../data'
 const Search = (props) => {
     const { navigation, route } = props;
     const { navigate, goBack } = navigation;
+    const isFocused = useIsFocused();
 
     const [searchText, setSearchText] = useState('');
     const [amount, setAmount] = useState(1);
-    const [productss, setProducts] = useState();
+    const [products, setProducts] = useState();
 
     const categories = [
         "Ngô nếp",
@@ -30,7 +32,7 @@ const Search = (props) => {
         "Bắp cải "
     ];
 
-    const filltered = () => productss.filter(eachFood => eachFood.details.toLocaleLowerCase().includes(searchText.toLocaleLowerCase()));
+    const filltered = () => products.filter(eachFood => eachFood.details.toLocaleLowerCase().includes(searchText.toLocaleLowerCase()));
 
     const storeData = async (item) => {
         try {
@@ -65,7 +67,7 @@ const Search = (props) => {
 
     const getProducts = async () => {
         try {
-            const response = await axios.get('https://b57e-2402-9d80-248-879b-9c57-bee2-7dac-c242.ap.ngrok.io/products/list');
+            const response = await axios.get('https://b4e6-2402-9d80-22d-6394-9103-573f-3110-bb1b.ap.ngrok.io/products/list');
             setProducts(response?.data?.result);
         } catch (error) {
             console.error(error);
@@ -74,7 +76,7 @@ const Search = (props) => {
 
     useEffect(() => {
         getProducts();
-    }, [])
+    }, [isFocused])
 
     return (<View style={{
         flex: 1,
@@ -145,7 +147,7 @@ const Search = (props) => {
                 )}
             </View>
         </View>
-        {filltered().length > 0 ?
+        {(products == undefined ? products : filltered().length) > 0 ?
             <FlatList
                 data={filltered()}
                 horizontal={false}

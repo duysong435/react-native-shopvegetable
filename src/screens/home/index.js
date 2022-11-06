@@ -17,14 +17,12 @@ import {
     icons,
     images
 } from '../../constants'
-
 import { categories } from '../../data'
 
 const Home = (props) => {
-    const [search, setSearch] = useState('');
-
     const { navigation, route } = props;
     const { navigate, goBack } = navigation;
+    const [search, setSearch] = useState('');
 
     const [amount, setAmount] = useState(1);
     const [name, setName] = useState('UserName');
@@ -33,19 +31,14 @@ const Home = (props) => {
 
     const filltered = () => products.filter(eachFood => eachFood.title.toLocaleLowerCase().includes(cate.toLocaleLowerCase()));
 
-
-    const getData = () => {
+    const getData = async () => {
         try {
-            AsyncStorage.getItem('UserName')
-                .then(
-                    value => {
-                        if (value != null) {
-                            setName(value);
-                        }
-                    }
-                )
-        } catch (error) {
-            console.log(error);
+            const value = await AsyncStorage.getItem('@user_Name')
+            if (value !== null) {
+                setName(value);
+            }
+        } catch (e) {
+
         }
     }
 
@@ -81,18 +74,18 @@ const Home = (props) => {
     }
 
     const getProducts = async () => {
-        try {
-            const response = await axios.get('https://b57e-2402-9d80-248-879b-9c57-bee2-7dac-c242.ap.ngrok.io/products/list');
-            setProducts(response?.data?.result);
-        } catch (error) {
-            console.error(error);
-        }
+        await axios.get('https://b4e6-2402-9d80-22d-6394-9103-573f-3110-bb1b.ap.ngrok.io/products/list')
+            .then((response) => {
+                setProducts(response?.data?.result);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
     };
 
     useEffect(() => {
-        getData();
         getProducts();
-        console.log(products)
+        getData();
     }, []);
     return (
         <ScrollView
@@ -107,13 +100,23 @@ const Home = (props) => {
             }}>
             <View style={{
                 flex: 20,
-                // backgroundColor: 'yellow',
             }}>
-                <Text style={{
-                    fontWeight: 'bold',
-                    fontSize: fontSizes.h3,
-                    marginTop: 20
-                }}>Hello </Text>
+                <View style={{
+                    flexDirection: 'row'
+                }}>
+                    <Text style={{
+                        fontWeight: 'bold',
+                        fontSize: fontSizes.h3,
+                        marginTop: 20
+                    }}>Hello</Text>
+                    <Text style={{
+                        fontWeight: 'bold',
+                        fontSize: fontSizes.h3,
+                        marginTop: 20,
+                        paddingLeft: 5,
+                        color: colors.main
+                    }}>{name.toUpperCase()}</Text>
+                </View>
                 <View style={{
                     flexDirection: 'row'
                 }}>
@@ -142,7 +145,6 @@ const Home = (props) => {
                             left: 10,
                             width: 10,
                             height: 10,
-                            // backgroundColor: 'red'
                         }}
                         source={icons.search} />
                     <TextInput
@@ -240,7 +242,7 @@ const Home = (props) => {
                     }}>Products</Text>
                     <ScrollView horizontal={true} >
                         <FlatList
-                            data={filltered()}
+                            data={products == undefined ? products : filltered()}
                             horizontal={false}
                             showsHorizontalScrollIndicator={false}
                             keyExtractor={(item, index) => item + index}

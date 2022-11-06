@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import {
+    Alert,
     Image,
     Text,
     TextInput,
     View
 } from "react-native";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { colors, fontSizes, images } from '../../constants'
 import { MainButton } from "../../components";
@@ -17,7 +20,7 @@ const Login = (props) => {
     const { navigate, goBack } = navigation;
 
     const [email, setEmail] = useState('long@gmail.com');
-    const [password, setPassword] = useState('12345');
+    const [password, setPassword] = useState('123456');
     const [errorEmail, setErrorEmail] = useState('');
     const [errorPassword, setErrorPassword] = useState('');
 
@@ -25,28 +28,25 @@ const Login = (props) => {
         && isValiEmail(email) == true
         && isValiPassord(password) == true
 
-    const setData = async (array) => {
+    const storeData = async (value) => {
         try {
-            await AsyncStorage.setItem('UserName', JSON.stringify(array));
-        } catch (error) {
-            console.log(error)
+            await AsyncStorage.setItem('@user_Name', value)
+        } catch (e) {
+            console.log(e);
         }
     }
 
     const getApiData = async () => {
-        await axios.post(`https://d298-2402-9d80-24a-b9b4-aced-f42c-62e1-2086.ap.ngrok.io/login`, {
-            Email: email,
-            Password: password
+        await axios.post(`https://b4e6-2402-9d80-22d-6394-9103-573f-3110-bb1b.ap.ngrok.io/login`, {
+            email,
+            password
         })
             .then((response) => {
-                // console.log(response?.data?.response[0].UserName);
+                console.log(response?.data?.result);
+                storeData(response?.data?.result[0].username);
                 navigate('TabUI');
-                // setData(response?.data?.response[0].UserName);
-                setData();
-
             })
             .catch((error) => {
-                // console.log(error);
                 Alert.alert(
                     "Tài khoản hoặc mật khẩu sai",
                     "Bạn có đăng kí tài khoản mới không?",
@@ -146,7 +146,7 @@ const Login = (props) => {
                 </View>
                 <MainButton
                     onPress={() => {
-                        navigate('TabUI')
+                        getApiData()
                     }}
                     name='Login'
                     styles={{
@@ -162,13 +162,15 @@ const Login = (props) => {
                     justifyContent: 'center'
                 }}>
                     <Text style={{
-                        fontSize: fontSizes.h4
+                        fontSize: fontSizes.h4,
+                        padding: 5
                     }}>
                         Don't have an account
                     </Text>
                     <Text style={{
                         marginLeft: 1,
-                        fontSize: fontSizes.h4
+                        fontSize: fontSizes.h4,
+                        padding: 5
                     }}>?</Text>
                     <Text
                         onPress={() => {
@@ -177,7 +179,8 @@ const Login = (props) => {
                         style={{
                             marginLeft: 5,
                             color: colors.main,
-                            fontSize: fontSizes.h4
+                            fontSize: fontSizes.h4,
+                            padding: 5
                         }}>
                         Register
                     </Text>

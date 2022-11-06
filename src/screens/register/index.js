@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {
+    Alert,
     Image,
     Text,
     TextInput,
@@ -12,6 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { colors, fontSizes, icons, images } from '../../constants'
 import { MainButton } from "../../components";
 import { isValiEmail, isValiPassord } from '../../utilies/Validation'
+import axios from "axios";
 
 
 const Register = (props) => {
@@ -30,15 +32,13 @@ const Register = (props) => {
         && isValiPassord(password) == true
 
     const PutData = async () => {
-        await axios.put(`https://d298-2402-9d80-24a-b9b4-aced-f42c-62e1-2086.ap.ngrok.io/login`, {
-            Email: email,
-            Password: password,
-            userName: userName
+        await axios.post(`https://b4e6-2402-9d80-22d-6394-9103-573f-3110-bb1b.ap.ngrok.io/login/add`, {
+            email,
+            password,
+            userName
         })
             .then((response) => {
                 console.log(response?.data);
-                // navigate('TabUI');
-                // setData(response?.data?.response[0].UserName);
                 Alert.alert(
                     "Thông báo",
                     "Đăng kí tài khoản mói thành công",
@@ -51,14 +51,13 @@ const Register = (props) => {
                 );
             })
             .catch((error) => {
-                // console.log(error);
+                console.log(error)
                 Alert.alert(
                     "Thông báo",
                     "Đăng kí tài khoản thất bại",
                     [
                         {
                             text: "OK",
-                            // onPress: () => navigate('Login')
                         }
                     ]
                 );
@@ -111,7 +110,7 @@ const Register = (props) => {
                         UserName
                     </Text>
                     <TextInput
-                        secureTextEntry={true}
+                        secureTextEntry={false}
                         style={{
                             backgroundColor: "#f4f4f4",
                             paddingVertical: 6,
@@ -195,7 +194,8 @@ const Register = (props) => {
 
                 <MainButton
                     onPress={() => {
-                        navigate('TabUI')
+                        // navigate('TabUI')
+                        PutData();
                     }}
                     name='Sign Up'
                     styles={{
