@@ -56,7 +56,7 @@ const Cart = (props) => {
 
     useEffect(() => {
         getCartData();
-        console.log(cartList)
+        // console.log(cartList)
     }, [isFocused])
 
     return <View style={{

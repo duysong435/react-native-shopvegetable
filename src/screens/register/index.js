@@ -32,13 +32,13 @@ const Register = (props) => {
         && isValiPassord(password) == true
 
     const PutData = async () => {
-        await axios.post(`https://b4e6-2402-9d80-22d-6394-9103-573f-3110-bb1b.ap.ngrok.io/login/add`, {
+        await axios.post(`https://1ed9-2402-9d80-211-6d28-310f-c6fb-d469-b743.ap.ngrok.io/login/add`, {
             email,
             password,
             userName
         })
             .then((response) => {
-                console.log(response?.data);
+                // console.log(response?.data);
                 Alert.alert(
                     "Thông báo",
                     "Đăng kí tài khoản mói thành công",

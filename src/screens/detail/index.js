@@ -52,8 +52,6 @@ const Detail = (props) => {
             alert(e)
         }
     }
-    console.log('trang details')
-    console.log(item)
     return (
         <View style={{
             flex: 100

@@ -67,7 +67,7 @@ const Search = (props) => {
 
     const getProducts = async () => {
         try {
-            const response = await axios.get('https://b4e6-2402-9d80-22d-6394-9103-573f-3110-bb1b.ap.ngrok.io/products/list');
+            const response = await axios.get('https://1ed9-2402-9d80-211-6d28-310f-c6fb-d469-b743.ap.ngrok.io/products/list');
             setProducts(response?.data?.result);
         } catch (error) {
             console.error(error);

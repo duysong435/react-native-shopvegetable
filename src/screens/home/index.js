@@ -74,7 +74,7 @@ const Home = (props) => {
     }
 
     const getProducts = async () => {
-        await axios.get('https://b4e6-2402-9d80-22d-6394-9103-573f-3110-bb1b.ap.ngrok.io/products/list')
+        await axios.get('https://1ed9-2402-9d80-211-6d28-310f-c6fb-d469-b743.ap.ngrok.io/products/list')
             .then((response) => {
                 setProducts(response?.data?.result);
             })
@@ -236,10 +236,29 @@ const Home = (props) => {
             }}>
 
                 <View>
-                    <Text style={{
-                        fontWeight: 'bold',
-                        fontSize: fontSizes.h3
-                    }}>Products</Text>
+                    <View style={{
+                        flexDirection: "row",
+                        justifyContent: 'space-between'
+                    }}>
+                        <Text style={{
+                            fontWeight: 'bold',
+                            fontSize: fontSizes.h3
+                        }}>Products</Text>
+                        <TouchableOpacity onPress={() => {
+                            setCate('')
+                        }}>
+                            <Text
+                                // onPress={() => {
+                                //     setSearch('');
+                                // }}
+                                style={{
+                                    fontWeight: 'bold',
+                                    fontSize: fontSizes.h3,
+                                    marginRight: 10,
+                                    color: colors.main
+                                }}>Set All</Text>
+                        </TouchableOpacity>
+                    </View>
                     <ScrollView horizontal={true} >
                         <FlatList
                             data={products == undefined ? products : filltered()}

@@ -37,12 +37,12 @@ const Login = (props) => {
     }
 
     const getApiData = async () => {
-        await axios.post(`https://b4e6-2402-9d80-22d-6394-9103-573f-3110-bb1b.ap.ngrok.io/login`, {
+        await axios.post(`https://1ed9-2402-9d80-211-6d28-310f-c6fb-d469-b743.ap.ngrok.io/login`, {
             email,
             password
         })
             .then((response) => {
-                console.log(response?.data?.result);
+                // console.log(response?.data?.result);
                 storeData(response?.data?.result[0].username);
                 navigate('TabUI');
             })
@@ -147,6 +147,7 @@ const Login = (props) => {
                 <MainButton
                     onPress={() => {
                         getApiData()
+                        // navigate('TabUI');
                     }}
                     name='Login'
                     styles={{
